@@ -26,7 +26,6 @@ namespace MultiLock
 {
     public class MyMultiLock : IMultiLock
     {
-        private static readonly object locker = new object();
         public IDisposable AcquireLock(params string[] keys)
         {
             // Если строки имеют одинаковое значение, не факт, что они имеют одинаковый адрес в памяти.
