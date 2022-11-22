@@ -54,7 +54,7 @@ namespace MultiLock
                                 Monitor.Exit(i);
                         }
                     }
-                    throw exception;
+                    throw;
                 }
             }
 
