@@ -44,7 +44,7 @@ namespace MultiLock
                 {
                     Monitor.Enter(k, ref lockTaken);
                 }
-                catch
+                catch (Exception exception)
                 {
                     if (lockTaken)
                     {
@@ -54,6 +54,7 @@ namespace MultiLock
                                 Monitor.Exit(i);
                         }
                     }
+                    throw exception;
                 }
             }
 
