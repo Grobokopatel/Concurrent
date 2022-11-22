@@ -9,16 +9,16 @@ namespace MultiLock
     public class LockedKeys<T> : IDisposable
         where T : class
     {
-        private readonly IEnumerable<T> _keys;
-        public LockedKeys(IEnumerable<T> keys)
+        private readonly string[] _keys;
+        public LockedKeys(string[] keys)
         {
             _keys = keys;
         }
 
         public void Dispose()
         {
-            foreach (var k in _keys)
-                Monitor.Exit(k);
+            for(var i=_keys.Length-1; i>=0; --i)
+                Monitor.Exit(_keys[i]);
         }
     }
 }
