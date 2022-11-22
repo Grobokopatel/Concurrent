@@ -29,21 +29,35 @@ namespace MultiLock
         private static readonly object locker = new object();
         public IDisposable AcquireLock(params string[] keys)
         {
-            lock (locker)
+            // Если строки имеют одинаковое значение, не факт, что они имеют одинаковый адрес в памяти.
+            // Т.е нет гарантий, что при подстановке строк с одинаковым значением в object.ReferenceEquals(s1, s2)
+            // вернётся true. string.Intern возвращает строку с одним и тем же адресом, при условии, что ему
+            // передавать строки с одними и теми же значениями.
+            var internStrings = keys.Distinct()
+                .OrderBy(s => s)
+                .Select(k => string.Intern(k))
+                .ToArray();
+            foreach (var k in internStrings)
             {
-                // Если строки имеют одинаковое значение, не факт, что они имеют одинаковый адрес в памяти.
-                // Т.е нет гарантий, что при подстановке строк с одинаковым значением в object.ReferenceEquals(s1, s2)
-                // вернётся true. string.Intern возвращает строку с одним и тем же адресом, при условии, что ему
-                // передавать строки с одними и теми же значениями.
-                var internStrings = keys.Distinct().Select(k => string.Intern(k)).ToArray();
-
-                foreach (var k in internStrings)
+                var lockTaken = false;
+                try
                 {
-                    Monitor.Enter(k);
+                    Monitor.Enter(k, ref lockTaken);
                 }
-                
-                return new LockedKeys<string>(internStrings);
+                catch
+                {
+                    if (lockTaken)
+                    {
+                        foreach (var i in internStrings)
+                        {
+                            if (Monitor.IsEntered(i))
+                                Monitor.Exit(i);
+                        }
+                    }
+                }
             }
+
+            return new LockedKeys<string>(internStrings);
         }
     }
 }
