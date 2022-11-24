@@ -48,14 +48,11 @@ namespace MultiLock
             }
             catch (Exception exception)
             {
-                if (lockTaken)
+                for (var i = sortedKeys.Length - 1; i >= 0; --i)
                 {
-                    foreach (var i in sortedKeys)
+                    if (Monitor.IsEntered(sortedKeys[i]))
                     {
-                        if (Monitor.IsEntered(i))
-                        {
-                            Monitor.Exit(i);
-                        }
+                        Monitor.Exit(sortedKeys[i]);
                     }
                 }
                 throw;
