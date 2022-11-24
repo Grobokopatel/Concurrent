@@ -32,32 +32,34 @@ namespace MultiLock
             // Т.е нет гарантий, что при подстановке строк с одинаковым значением в object.ReferenceEquals(s1, s2)
             // вернётся true. string.Intern возвращает строку с одним и тем же адресом, при условии, что ему
             // передавать строки с одними и теми же значениями.
-            var internStrings = keys.Distinct()
-                .OrderBy(s => s)
+            var sortedKeys = keys.Distinct()
+                .OrderBy(k => k)
                 .Select(k => string.Intern(k))
                 .ToArray();
-            foreach (var k in internStrings)
+            var lockTaken = false;
+            try
             {
-                var lockTaken = false;
-                try
+                foreach (var k in sortedKeys)
                 {
+                    lockTaken = false;
                     Monitor.Enter(k, ref lockTaken);
                 }
-                catch (Exception exception)
+                return new LockedKeys<string>(sortedKeys);
+            }
+            catch (Exception exception)
+            {
+                if (lockTaken)
                 {
-                    if (lockTaken)
+                    foreach (var i in sortedKeys)
                     {
-                        foreach (var i in internStrings)
+                        if (Monitor.IsEntered(i))
                         {
-                            if (Monitor.IsEntered(i))
-                                Monitor.Exit(i);
+                            Monitor.Exit(i);
                         }
                     }
-                    throw;
                 }
+                throw;
             }
-
-            return new LockedKeys<string>(internStrings);
         }
     }
 }
