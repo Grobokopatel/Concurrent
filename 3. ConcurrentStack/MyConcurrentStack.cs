@@ -54,7 +54,15 @@ namespace ConcurrentStack
             }
         }
 
-        public int Count => _head.Index + 1;
+        public int Count
+        {
+            get
+            {
+                var head = _head;
+                return head is null ? 0 : head.Index + 1;
+            }
+        }
+        
 
         public void Push(T item)
         {
