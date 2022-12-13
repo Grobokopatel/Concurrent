@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomThreadPool", "CustomThreadPool.csproj", "{EE3F8773-ED91-4044-9DA7-9928EB58724C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE3F8773-ED91-4044-9DA7-9928EB58724C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE3F8773-ED91-4044-9DA7-9928EB58724C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE3F8773-ED91-4044-9DA7-9928EB58724C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE3F8773-ED91-4044-9DA7-9928EB58724C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6415D144-B989-48FC-A739-CF901301F49F}
+	EndGlobalSection
+EndGlobal
