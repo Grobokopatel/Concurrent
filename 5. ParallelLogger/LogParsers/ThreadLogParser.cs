@@ -33,8 +33,8 @@ namespace LogParsing.LogParsers
 
                 void ParseLogs()
                 {
-                    for (var i = from; i < to; ++i)
-                        lines[i] = tryGetIdFromLine(lines[i]);
+                    for (var j = from; j < to; ++j)
+                        lines[j] = tryGetIdFromLine(lines[j]);
                 }
             }
 

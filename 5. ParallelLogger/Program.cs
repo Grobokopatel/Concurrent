@@ -13,8 +13,8 @@ namespace LogParsing
         {
             var file = new FileInfo("../../../Files/bigLog.log");
 
-            var sequential = RunParser(new SequentialLogParser(file, TryGetIdFromLine));
             var threads = RunParser(new ThreadLogParser(file, TryGetIdFromLine));
+            var sequential = RunParser(new SequentialLogParser(file, TryGetIdFromLine));
             var parallel = RunParser(new ParallelLogParser(file, TryGetIdFromLine));
             var plinq = RunParser(new PLinqLogParser(file, TryGetIdFromLine));
             

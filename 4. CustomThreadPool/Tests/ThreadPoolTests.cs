@@ -35,7 +35,6 @@ namespace CustomThreadPool
             long enqueueMs;
 
             const int actionsCount = 1 * 1000;
-
             using(var cev = new CountdownEvent(actionsCount))
             {
                 Action sumAction = () =>
