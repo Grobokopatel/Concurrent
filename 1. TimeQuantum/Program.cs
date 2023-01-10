@@ -12,8 +12,8 @@ namespace TimeQuantum
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
             Process.GetCurrentProcess().ProcessorAffinity = (IntPtr)(1 << (Environment.ProcessorCount - 1));
 
-            var thread1 = new Thread(WriteToData);
-            var thread2 = new Thread(WriteToData);
+            var thread1 = new Thread(WriteToTimeStamps);
+            var thread2 = new Thread(WriteToTimeStamps);
             _timer.Start();
             thread1.Start();
             thread2.Start();
@@ -24,7 +24,7 @@ namespace TimeQuantum
             Console.WriteLine(_timeStamps.Skip(3).Zip(_timeStamps.Skip(4), (p, c) => c - p).Average());
         }
 
-        public static void WriteToData()
+        public static void WriteToTimeStamps()
         {
             for (long i = _timer.ElapsedMilliseconds; i < 1000; i = _timer.ElapsedMilliseconds)
             {
