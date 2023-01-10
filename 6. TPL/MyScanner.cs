@@ -17,7 +17,7 @@ public class MyScanner : IPScanner
     private static Task ProcessIp(IPAddress ip, int[] ports)
     {
         return PingIp(ip).ContinueWith(CheckPorts);
-
+        
         void CheckPorts(Task<IPStatus> pingTask)
         {
             if (pingTask.Result != IPStatus.Success)
